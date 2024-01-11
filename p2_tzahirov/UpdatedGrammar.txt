@@ -1,0 +1,59 @@
+Toyger Syntax Specification (Simplified) - Tarik Zahirovic, G01285530
+
+---------------------------------------------------------------------
+
+prog -> LET decs IN statements END
+
+decs -> dec decs | ε
+
+dec -> var_dec | func_dec
+
+var_dec -> VAR ID : type
+
+type -> INT | STRING | VOID
+
+func_dec -> FUNCTION ID ( func_params_branch		
+
+	func_params_branch -> params func_tail | func_tail
+		
+		func_tail -> ) : type = statements END
+	
+params -> param param_loop
+	
+	param_loop -> , param param_loop | ε
+	
+param -> ID : type
+
+statements -> statement statement_loop
+
+	statement_loop -> ; statement statement_loop | ε
+	
+statement -> ID id_assign_branch | return return_branch | printint expr_parentheses | printstring expr_parentheses
+
+	id_assign_branch -> := assign_branch | ( id_list_branch )
+	
+		assign_branch -> expr | GETINT ( )
+		
+		id_list_branch -> expr_list | ε
+		
+	return_branch -> expr | ε
+	
+	expr_parentheses -> ( expr_list ) | ( )
+	
+expr -> term term_branch
+
+	term_branch -> + term term_branch | - term term_branch | ε
+	
+term -> factor factor_branch
+
+	factor_branch -> * factor factor_branch | / factor factor_branch | ε
+	
+factor -> expr_parentheses | NUMBER | STRING | ID factor_list_branch
+
+	factor_list_branch -> id_list_branch | ε
+	
+expr_list -> expr list_branch
+
+	list_branch -> , expr list_branch | ε
+	
+---------------------------------------------------------------------
